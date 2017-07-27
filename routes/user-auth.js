@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+const passport = require('../config/passport');
 const jwt = require('jsonwebtoken');
 const jwtOptions = require('../config/jwt');
 
@@ -73,6 +74,10 @@ router.post('/login', (req, res, next) => {
       }
     });
   });
+});
+
+router.get('/ping', passport.authenticate('jwt', { session: false }), (req, res) => {
+  res.json('Pong');
 });
 
 module.exports = router;
