@@ -8,6 +8,7 @@ var cors = require('cors');
 
 var index = require('./routes/index');
 var phonesApi = require('./routes/phones-api');
+var userAuth = require('./routes/user-auth');
 
 // database connection
 require('./config/database');
@@ -28,7 +29,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
+app.use('/', userAuth);
 app.use('/api', phonesApi);
 app.use(function(req, res) {
   res.sendfile(__dirname + '/public/index.html');
