@@ -6,6 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 
+var passport = require('./config/passport');
+
 var index = require('./routes/index');
 var phonesApi = require('./routes/phones-api');
 var userAuth = require('./routes/user-auth');
@@ -30,7 +32,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', userAuth);
-app.use('/api', phonesApi);
+app.use('/api',  passport.authenticate('jwt', {session: false}), phonesApi);
 app.use(function(req, res) {
   res.sendfile(__dirname + '/public/index.html');
 });
